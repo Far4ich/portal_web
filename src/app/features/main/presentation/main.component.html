@@ -44,7 +44,10 @@
           <div class="hidden md:flex items-center space-x-3 ">
             <div class="sidebar_menu">
               <div class="bg-tt-lighter-gray rounded-full w-[40px] h-[40px]">
-                <img class="pt-1 m-auto" src="assets/person.fill.svg" (click)="performAction({
+                <button class="w-[40px] h-[38px] bg-no-repeat bg-center bg-[url('assets/person.fill.svg')]" (click)="performAction({
+                  type: MainActionTypes.SHOW_SIDEBAR
+              })"></button>
+                <img class="hidden pt-1 m-auto" src="assets/person.fill.svg" (click)="performAction({
                   type: MainActionTypes.SHOW_SIDEBAR})" alt="account_ico">
               </div>
 

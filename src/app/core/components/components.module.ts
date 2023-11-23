@@ -14,6 +14,11 @@ import { PopupMenuComponent } from './popup-menu/popup-menu.component';
 import { PopupMenuButtonComponent } from './popup-menu/popup-menu-button/popup-menu-button.component';
 import { PopupMenuContentComponent } from './popup-menu/popup-menu-content/popup-menu-content.component';
 import { PopupMenuOptionComponent } from './popup-menu/popup-menu-option/popup-menu-option.component';
+import { MultiselectFieldComponent } from './multiselect-field/multiselect-field.component';
+import { PageShadingComponent } from './page-shading/page-shading.component';
+import { ToastComponent } from './toast-alert/toast-alert.component';
+import { ErrorToastComponent } from './toast-alert/error-toast/error-toast.component';
+import { SuccessToastComponent } from './toast-alert/success-toast/success-toast.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +34,12 @@ import { PopupMenuOptionComponent } from './popup-menu/popup-menu-option/popup-m
     PopupMenuComponent,
     PopupMenuButtonComponent,
     PopupMenuContentComponent,
-    PopupMenuOptionComponent
+    PopupMenuOptionComponent,
+    MultiselectFieldComponent,
+    PageShadingComponent,
+    ToastComponent,
+    ErrorToastComponent,
+    SuccessToastComponent
   ],
   exports: [
     CardComponent,
@@ -43,12 +53,13 @@ import { PopupMenuOptionComponent } from './popup-menu/popup-menu-option/popup-m
     PopupMenuComponent,
     PopupMenuButtonComponent,
     PopupMenuContentComponent,
-    PopupMenuOptionComponent
+    PopupMenuOptionComponent,
+    MultiselectFieldComponent,
+    PageShadingComponent,
+    ToastComponent,
+    ErrorToastComponent,
+    SuccessToastComponent
   ],
-  imports: [
-    CommonModule,
-    AppRoutingModule
-  ]
+  imports: [CommonModule, AppRoutingModule],
 })
-
-export class ComponentsModule { }
+export class ComponentsModule {}

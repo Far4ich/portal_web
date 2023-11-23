@@ -10,14 +10,33 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DepartmentInfoComponent {
   public countOfEmployees: number = 0;
-  public department!: DepartmentEntity
+  public department: DepartmentEntity = {
+    id: 1,
+    name: "Test",
+    supervisor: {
+      id: 1,
+      name: "Сергей Исхаков",
+      mail: "se.isxakov@mail.ru",
+      img: ""
+    },
+    isSelect: false,
+    visibleContent: false,
+    departments: [],
+    employees: []
+  }
 
   constructor(private dataService: EmployeesDataService,
     private route: ActivatedRoute) 
     {
       let findDepartment = dataService.departments.find((element)=>{
-        element.id.toString() == this.route.snapshot.paramMap.get('id')
+        return element.id.toString() == this.route.snapshot.paramMap.get('id')
       })
+      if (findDepartment)
+      {
+        this.department = dataService.ConvertToDepartmentEntity(findDepartment)
+      }
+      console.log(findDepartment)
+      console.log(this.department)
     }
 
   getCountEmployees(department: DepartmentEntity):void

@@ -1,5 +1,5 @@
 import { DepartmentEntity } from '../../department/department.component';
-import { EmployeeEntity } from '../../employee-item/employee-item.component';
+import { EmployeeItemEntity } from '../../employee-item/employee-item.component';
 import { IDepartmentEditState } from './department-edit-state';
 
 export type DepartmentEditResultAction =
@@ -32,7 +32,7 @@ export interface ChangeNameResultAction {
 
 export interface ChangeSupervisorResultAction {
   readonly type: DepartmentEditResultActionTypes.CHANGE_SUPERVISOR;
-  readonly supervisor: EmployeeEntity;
+  readonly supervisor: EmployeeItemEntity;
 }
 
 export interface RemoveSupervisorResultAction {
@@ -50,12 +50,12 @@ export interface RemoveParentDepartamentResultAction {
 
 export interface AddEmpoyeesResultAction {
   readonly type: DepartmentEditResultActionTypes.ADD_EMLOYEES;
-  readonly empoyees: EmployeeEntity[];
+  readonly empoyees: EmployeeItemEntity[];
 }
 
 export interface RemoveEmpoyeesResultAction {
   readonly type: DepartmentEditResultActionTypes.REMOVE_EMPOYESS;
-  readonly empoyees: EmployeeEntity[];
+  readonly empoyees: EmployeeItemEntity[];
 }
 
 export interface InitializeResultAction {

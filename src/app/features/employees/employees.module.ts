@@ -24,6 +24,8 @@ import { DepartmentNewComponent } from './components/department-new/department-n
 import { EmployeeNewComponent } from './components/employee-new/employee-new.component';
 import { DepartmentEditComponent } from './components/department-edit/department-edit.component';
 import { EmployeeEditComponent } from './components/employee-edit/employee-edit.component';
+import { ModalWindowComponent } from './components/modal-window/modal-window.component';
+import { EmployeeSelectComponent } from './components/employee-select/employee-select.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { EmployeeEditComponent } from './components/employee-edit/employee-edit.
     EmployeeNewComponent,
     DepartmentEditComponent,
     EmployeeEditComponent,
+    ModalWindowComponent,
+    EmployeeSelectComponent
   ],
   exports: [EmployeesComponent],
   imports: [CommonModule, ComponentsModule, RouterOutlet],

@@ -1,20 +1,17 @@
-<div
-  class="flex justify-between px-2 py-1 rounded-2xl hover:bg-tt-light-light-gray"
+<div class="flex justify-between pr-2 py-1"
+  [style.marginLeft] = "getMarginOffset()"
+  [style.paddingLeft] = "getPaddingOffset()"
+  [ngClass]="{ 
+    'rounded-2xl hover:bg-tt-light-light-gray': !employee.isSelect, 
+    'bg-tt-light-blue': employee.isSelect
+  }"
+  (click)="onClick($event)"
   (mouseover)="onMouseOver()"
   (mouseleave)="onMouseOut()"
 >
   <div class="flex">
-    <img
-      *ngIf="employee.img == ''"
-      class="w-10 h-10 my-auto rounded-full"
-      src="../../../../assets/empty_employee_icon.svg"
-    />
-    <img
-      *ngIf="employee.img != ''"
-      class="w-10 h-10 my-auto rounded-full"
-      src="{{ employee.img }}"
-    />
-
+    <img *ngIf='employee.img == ""' class="w-10 h-10 my-auto rounded-full" src="../../../../../assets/empty_employee_icon.svg">
+    <img *ngIf='employee.img != ""' class="w-10 h-10 my-auto rounded-full" src="{{employee.img}}">
     <div class="ml-4 my-auto">
       <p class="font-medium text-[16px] text-tt-dark-gray">
         {{ employee.name }}

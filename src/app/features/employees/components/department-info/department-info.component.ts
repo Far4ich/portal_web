@@ -4,6 +4,8 @@ import {
   EmployeesNavItem,
   EmployeesNavigator,
 } from '../../navigation/employees-navigator';
+import { EmployeesDataService } from '../../data/employees-data-service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'department-info',
@@ -11,71 +13,41 @@ import {
   styleUrls: ['./department-info.component.scss'],
 })
 export class DepartmentInfoComponent {
-  constructor(private navigator: EmployeesNavigator) {}
+  public countOfEmployees: number = 0;
+
+  public department: DepartmentEntity = {
+    id: 1,
+    name: "Test",
+    supervisor: {
+      id: 1,
+      name: "Сергей Исхаков",
+      mail: "se.isxakov@mail.ru",
+      img: ""
+    },
+    isSelect: false,
+    visibleContent: false,
+    departments: [],
+    employees: []
+  }
+
+  constructor(private dataService: EmployeesDataService,
+    private navigator: EmployeesNavigator,
+    private route: ActivatedRoute) {
+    let findDepartment = dataService.departments.find((element) => {
+      return element.id.toString() == this.route.snapshot.paramMap.get('id')
+    })
+    if (findDepartment) {
+      this.department = dataService.ConvertToDepartmentEntity(findDepartment)
+    }
+    console.log(findDepartment)
+    console.log(this.department)
+  }
 
   editDepartment() {
     this.navigator.showContent({
       navItem: EmployeesNavItem.EDIT_DEPARTMENT,
       params: '',
     });
-  }
-
-  public countOfEmployees: number = 0;
-
-  @Input() public department: DepartmentEntity = {
-    id: -1,
-    name: 'Безопасность',
-    supervisor: {
-      id: -1,
-      name: 'Елкин Николай Петрович',
-      mail: 'de.voronin@mail.ru',
-      img: '',
-    },
-    departments: [
-      {
-        id: -1,
-        name: 'Безопасность',
-        supervisor: {
-          id: -1,
-          name: 'Елкин Николай Петрович',
-          mail: 'de.voronin@mail.ru',
-          img: '',
-        },
-        departments: [],
-        employees: [
-          {
-            id: -1,
-            name: 'Воронин Дмитрий',
-            mail: 'de.voronin@mail.ru',
-            img: '',
-          },
-          {
-            id: -1,
-            name: 'Сергей Исхаков',
-            mail: 'se.isxakov@mail.ru',
-            img: '',
-          },
-        ],
-      },
-    ],
-    employees: [
-      {
-        id: -1,
-        name: 'Воронин Дмитрий',
-        mail: 'de.voronin@mail.ru',
-        img: '',
-      },
-      {
-        id: -1,
-        name: 'Сергей Исхаков',
-        mail: 'se.isxakov@mail.ru',
-        img: '',
-      },
-    ],
-  };
-
-  ngOnInit(): void {
-    this.getCountEmployees(this.department);
   }
 
   getCountEmployees(department: DepartmentEntity): void {
@@ -100,5 +72,5 @@ export class DepartmentInfoComponent {
     );
   }
 
-  onAddClicked(): void {}
+  onAddClicked(): void { }
 }

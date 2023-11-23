@@ -13,6 +13,8 @@ import { MainModule } from './features/main/main.module';
 import { EmployeesModule } from './features/employees/employees.module';
 import { SectionsModule } from './features/sections/sections.module';
 import { RegistrationModule } from './features/registration/registration.module';
+import { SectionModule } from './features/section/section.module';
+import { ComponentsModule } from './core/components/components.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +26,7 @@ import { RegistrationModule } from './features/registration/registration.module'
     MainModule,
     SectionsModule,
     RegistrationModule,
+    ComponentsModule
   ],
   providers: [
     {

@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './features/main/presentation/main.component';
 import { AuthorizationComponent } from './features/authorization/presentation/view/authorization.component';
+import { ProfileInfoComponent } from './features/profile/profile-info/profile-info.component';
+import { ProfileSecurityComponent } from './features/profile/profile-security/profile-security.component';
+import { ProfileComponent } from './features/profile/profile/profile.component';
 import {
   alreadyLoginGuardFunction,
   loginGuardFunction,
@@ -31,15 +34,18 @@ const employeesItems: Routes = [
   { path: 'sections/:id', component: SectionComponent },
 ];
 
+const profileItems: Routes = [
+  {path: '', component: ProfileInfoComponent,},
+  {path: 'security', component:ProfileSecurityComponent}
+]
+
+
 const mainItems: Routes = [
-  {
-    path: 'employees',
-    component: EmployeesComponent,
-    children: employeesItems,
-  },
-  { path: 'sections', component: SectionsComponent },
-  { path: 'settings', component: SettingsComponent },
-];
+  {path: 'employees', component: EmployeesComponent, children: employeesItems},
+  {path: 'sections', component: SectionsComponent},
+  {path: 'settings', component: SettingsComponent},
+  {path: 'profile', component: ProfileComponent, children: profileItems},
+]
 
 const appRoutes: Routes = [
   {
@@ -55,7 +61,7 @@ const appRoutes: Routes = [
   {
     path: '',
     component: MainComponent,
-    canActivate: [loginGuardFunction],
+    //canActivate: [loginGuardFunction],
     children: mainItems,
   },
 ];

@@ -1,12 +1,19 @@
+import {
+  EmployeesNavItem,
+  EmployeesNavigator,
+} from '../../navigation/employees-navigator';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EmployeesDataService } from '../../data/employees-data-service';
+
 @Component({
   selector: 'app-core-employee-item',
   templateUrl: './employee-item.component.html',
-  styleUrls: ['./employee-item.component.scss']
+  styleUrls: ['./employee-item.component.scss'],
 })
+
 export class EmployeeItemComponent {
-  constructor(private data: EmployeesDataService){}
+  constructor(private data: EmployeesDataService, 
+    private navigator: EmployeesNavigator){}
 
   showDots: boolean = false;
 
@@ -17,6 +24,14 @@ export class EmployeeItemComponent {
     mail: "not-found@mail.ru",
     isSelect: false
   };
+
+  editEmployee() {
+    this.navigator.showContent({
+      navItem: EmployeesNavItem.EDIT_EMPLOYEE,
+      params: '',
+    });
+  }
+ 
 
   @Input() public offset: number = 0
 
@@ -59,10 +74,17 @@ export class EmployeeItemComponent {
     this.showDots = true;
   }
 
-  onMouseOut(): void
-  {
+  onMouseOut(): void {
     this.showDots = false;
   }
+
+  strings = {
+    actions: {
+      edit: 'Редактировать',
+      move: 'Переместить в другой отдел',
+      delete: 'Удалить',
+    },
+  };
 }
 
 export interface EmployeeItemEntity{

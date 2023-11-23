@@ -1,4 +1,5 @@
 import { DropdownItem } from 'src/app/core/components/dropdown-field/dropdown-field.component';
+import { DepartmentEntity } from '../../department/department.component';
 
 export type EmployeeNewResultAction =
   | ChangeFirstNameResultAction
@@ -8,8 +9,9 @@ export type EmployeeNewResultAction =
   | ChangeEmailResultAction
   | ChangePasswordResultAction
   | ChangeDepartmentResultAction
-  | ChangeRoleResultAction
-  | ChangeRightResultAction
+  | RemoveDepartmentResultAction
+  | AddRoleResultAction
+  | RemoveRoleResultAction
   | ValidationResultAction;
 
 export enum EmployeeNewResultActionTypes {
@@ -20,8 +22,9 @@ export enum EmployeeNewResultActionTypes {
   CHANGE_EMAIL,
   CHANGE_PASSWORD,
   SELECT_DEPARTMENT,
-  SELECT_ROLE,
-  SELECT_RIGHT,
+  REMOVE_DEPARTMENT,
+  ADD_ROLE,
+  REMOVE_ROLE,
   VALIDATION_ERROR,
 }
 
@@ -55,20 +58,23 @@ export interface ChangePasswordResultAction {
   readonly password: string;
 }
 
-// TODO: заменить DropdownItem на DTO-шки
 export interface ChangeDepartmentResultAction {
   readonly type: EmployeeNewResultActionTypes.SELECT_DEPARTMENT;
-  readonly department?: DropdownItem;
+  readonly department?: DepartmentEntity;
 }
 
-export interface ChangeRoleResultAction {
-  readonly type: EmployeeNewResultActionTypes.SELECT_ROLE;
+export interface RemoveDepartmentResultAction {
+  readonly type: EmployeeNewResultActionTypes.REMOVE_DEPARTMENT;
+}
+
+export interface AddRoleResultAction {
+  readonly type: EmployeeNewResultActionTypes.ADD_ROLE;
   readonly role?: DropdownItem;
 }
 
-export interface ChangeRightResultAction {
-  readonly type: EmployeeNewResultActionTypes.SELECT_RIGHT;
-  readonly right?: DropdownItem;
+export interface RemoveRoleResultAction {
+  readonly type: EmployeeNewResultActionTypes.REMOVE_ROLE;
+  readonly role?: DropdownItem;
 }
 
 export interface ValidationResultAction {

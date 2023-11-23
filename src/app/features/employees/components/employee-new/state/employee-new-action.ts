@@ -1,3 +1,5 @@
+import { DepartmentEntity } from '../../department/department.component';
+
 export type EmployeeNewAction =
   | ChangeFirstNameAction
   | ChangeLastNameAction
@@ -6,8 +8,9 @@ export type EmployeeNewAction =
   | ChangeEmailAction
   | ChangePasswordAction
   | ChangeDepartmentAction
-  | ChangeRoleAction
-  | ChangeRightAction
+  | RemoveDepartmentAction
+  | AddRoleAction
+  | RemoveRoleAction
   | CreateAction;
 
 export enum EmployeeNewActionTypes {
@@ -18,8 +21,9 @@ export enum EmployeeNewActionTypes {
   CHANGE_EMAIL,
   CHANGE_PASSWORD,
   SELECT_DEPARTMENT,
-  SELECT_ROLE,
-  SELECT_RIGHT,
+  REMOVE_DEPARTMENT,
+  ADD_ROLE,
+  REMOVE_ROLE,
   CREATE,
 }
 
@@ -55,17 +59,21 @@ export interface ChangePasswordAction {
 
 export interface ChangeDepartmentAction {
   readonly type: EmployeeNewActionTypes.SELECT_DEPARTMENT;
-  readonly departmentId: string;
+  readonly department: DepartmentEntity;
 }
 
-export interface ChangeRoleAction {
-  readonly type: EmployeeNewActionTypes.SELECT_ROLE;
+export interface RemoveDepartmentAction {
+  readonly type: EmployeeNewActionTypes.REMOVE_DEPARTMENT;
+}
+
+export interface AddRoleAction {
+  readonly type: EmployeeNewActionTypes.ADD_ROLE;
   readonly roleId: string;
 }
 
-export interface ChangeRightAction {
-  readonly type: EmployeeNewActionTypes.SELECT_RIGHT;
-  readonly rightId: string;
+export interface RemoveRoleAction {
+  readonly type: EmployeeNewActionTypes.REMOVE_ROLE;
+  readonly roleId: string;
 }
 
 export interface CreateAction {

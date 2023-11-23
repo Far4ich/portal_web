@@ -1,8 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{html,ts}",
-  ],
+  content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {
       colors: {
@@ -39,8 +37,10 @@ module.exports = {
         DEFAULT: "#FFF",
         "tt-bg": "#FFF",
       },
+      boxShadow: {
+        "tt-popup-menu": "0px 0px 30px 0px rgba(0, 0, 0, 0.25)",
+      },
     },
   },
   plugins: [],
-}
-
+};

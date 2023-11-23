@@ -1,23 +1,23 @@
 import { Inject, Injectable } from '@angular/core';
 import { Executor } from 'src/app/core/mvi/store';
-import { EmployeeNewState } from './employee-new-state';
+import { EmployeeEditState } from './employee-edit-state';
 import {
-  EmployeeNewResultAction,
-  EmployeeNewResultActionTypes,
-} from './employee-new-result-action';
+  EmployeeEditResultAction,
+  EmployeeEditResultActionTypes,
+} from './employee-edit-result-action';
 import {
-  EmployeeNewAction,
-  EmployeeNewActionTypes,
-} from './employee-new-action';
+  EmployeeEditAction,
+  EmployeeEditActionTypes,
+} from './employee-edit-action';
 import { Validator } from 'src/app/core/validators/validator';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EmployeeNewExecutor extends Executor<
-  EmployeeNewState,
-  EmployeeNewAction,
-  EmployeeNewResultAction
+export class EmployeeEditExecutor extends Executor<
+  EmployeeEditState,
+  EmployeeEditAction,
+  EmployeeEditResultAction
 > {
   constructor(
     @Inject('NewEmployeeEmailValidator') private emailValidator: Validator,
@@ -28,97 +28,108 @@ export class EmployeeNewExecutor extends Executor<
     @Inject('NewEmployeeLastNameValidator')
     private lastNameValidator: Validator,
     @Inject('NewEmployeeDateOfBirthValidator')
-    private dateOfBirthValidator: Validator
+    private dateOfBirthValidator: Validator,
   ) {
     super();
   }
 
-  execute(action: EmployeeNewAction) {
+  execute(action: EmployeeEditAction) {
     switch (action.type) {
-      case EmployeeNewActionTypes.CHANGE_FIRST_NAME:
+      case EmployeeEditActionTypes.CHANGE_FIRST_NAME:
         this.reduce({
-          type: EmployeeNewResultActionTypes.CHANGE_FIRST_NAME,
+          type: EmployeeEditResultActionTypes.CHANGE_FIRST_NAME,
           firstName: action.firstName,
         });
         break;
 
-      case EmployeeNewActionTypes.CHANGE_LAST_NAME:
+      case EmployeeEditActionTypes.CHANGE_LAST_NAME:
         this.reduce({
-          type: EmployeeNewResultActionTypes.CHANGE_LAST_NAME,
+          type: EmployeeEditResultActionTypes.CHANGE_LAST_NAME,
           lastName: action.lastName,
         });
         break;
 
-      case EmployeeNewActionTypes.CHANGE_PATRONYMIC:
+      case EmployeeEditActionTypes.CHANGE_PATRONYMIC:
         this.reduce({
-          type: EmployeeNewResultActionTypes.CHANGE_PATRONYMIC,
+          type: EmployeeEditResultActionTypes.CHANGE_PATRONYMIC,
           patronymic: action.patronymic,
         });
         break;
 
-      case EmployeeNewActionTypes.CHANGE_DATE_OF_BIRTH:
+      case EmployeeEditActionTypes.CHANGE_DATE_OF_BIRTH:
         this.reduce({
-          type: EmployeeNewResultActionTypes.CHANGE_DATE_OF_BIRTH,
+          type: EmployeeEditResultActionTypes.CHANGE_DATE_OF_BIRTH,
           dateOfBirth: action.dateOfBirth,
         });
         break;
 
-      case EmployeeNewActionTypes.CHANGE_EMAIL:
+      case EmployeeEditActionTypes.CHANGE_EMAIL:
         this.reduce({
-          type: EmployeeNewResultActionTypes.CHANGE_EMAIL,
+          type: EmployeeEditResultActionTypes.CHANGE_EMAIL,
           email: action.email,
         });
         break;
 
-      case EmployeeNewActionTypes.CHANGE_PASSWORD:
+      case EmployeeEditActionTypes.CHANGE_PASSWORD:
         this.reduce({
-          type: EmployeeNewResultActionTypes.CHANGE_PASSWORD,
+          type: EmployeeEditResultActionTypes.CHANGE_PASSWORD,
           password: action.password,
         });
         break;
 
-      case EmployeeNewActionTypes.SELECT_DEPARTMENT:
+      case EmployeeEditActionTypes.SELECT_DEPARTMENT:
         this.reduce({
-          type: EmployeeNewResultActionTypes.SELECT_DEPARTMENT,
-          department: this.getState().departments.find(
-            (d) => d.id === action.departmentId
-          ),
+          type: EmployeeEditResultActionTypes.SELECT_DEPARTMENT,
+          department: action.department,
         });
         break;
 
-      case EmployeeNewActionTypes.SELECT_RIGHT:
+      case EmployeeEditActionTypes.REMOVE_DEPARTMENT:
         this.reduce({
-          type: EmployeeNewResultActionTypes.SELECT_RIGHT,
-          right: this.getState().rights.find((r) => r.id === action.rightId),
+          type: EmployeeEditResultActionTypes.REMOVE_DEPARTMENT,
         });
         break;
 
-      case EmployeeNewActionTypes.SELECT_ROLE:
+      case EmployeeEditActionTypes.ADD_ROLE:
         this.reduce({
-          type: EmployeeNewResultActionTypes.SELECT_ROLE,
+          type: EmployeeEditResultActionTypes.ADD_ROLE,
           role: this.getState().roles.find((r) => r.id === action.roleId),
         });
         break;
 
-      case EmployeeNewActionTypes.CREATE:
-        this.handleCreate();
+      case EmployeeEditActionTypes.REMOVE_ROLE:
+        this.reduce({
+          type: EmployeeEditResultActionTypes.REMOVE_ROLE,
+          role: this.getState().roles.find((r) => r.id === action.roleId),
+        });
+        break;
+
+      case EmployeeEditActionTypes.INITIALIZE:
+        this.reduce({
+          type: EmployeeEditResultActionTypes.INITIALIZE,
+          state: action.state,
+        });
+        break;
+
+      case EmployeeEditActionTypes.EDIT:
+        this.handleEdit();
         break;
     }
   }
 
-  private handleCreate() {
+  private handleEdit() {
     let emailError = this.emailValidator.validate(this.getState().email);
     let passwordError = this.passwordValidator.validate(
-      this.getState().password
+      this.getState().password,
     );
     let firstNameError = this.firstNameValidator.validate(
-      this.getState().firstName
+      this.getState().firstName,
     );
     let lastNameError = this.lastNameValidator.validate(
-      this.getState().lastName
+      this.getState().lastName,
     );
     let dateOfBirthError = this.dateOfBirthValidator.validate(
-      this.getState().dateOfBirth
+      this.getState().dateOfBirth,
     );
 
     if (
@@ -129,7 +140,7 @@ export class EmployeeNewExecutor extends Executor<
       dateOfBirthError != null
     ) {
       this.reduce({
-        type: EmployeeNewResultActionTypes.VALIDATION_ERROR,
+        type: EmployeeEditResultActionTypes.VALIDATION_ERROR,
         emailError: emailError != null ? emailError : '',
         passwordError: passwordError != null ? passwordError : '',
         firstNameError: firstNameError != null ? firstNameError : '',
@@ -138,8 +149,7 @@ export class EmployeeNewExecutor extends Executor<
       });
       return;
     }
-
-    // Успех. Все валлидно 👻
+    
     console.log(this.getState());
   }
 }

@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
 })
 export class EmployeesComponent {
   showDialog: boolean = false
-
+ isModalActive: boolean = true
   onCrossClick() {
-    this.showDialog = !this.showDialog
+    this.isModalActive = !this.isModalActive
   }
 
 }

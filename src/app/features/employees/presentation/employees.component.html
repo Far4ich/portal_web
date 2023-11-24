@@ -1,16 +1,11 @@
-<div class="flex ml-[17%] mt-10">
-    <app-core-page-shading [showDialog]="showDialog">
-        <employees-modal-window (closeClick)="onCrossClick()">
-            <app-core-search-field class="mb-[16px]"/>
-        </employees-modal-window>
-    </app-core-page-shading>
-    
+<div class="flex ml-[17%] mt-10">    
     <employees-menu/>
 
     <div class="ml-8">
         <router-outlet></router-outlet>
     </div>
 
+    <employees-modal-window *ngIf="isModalActive" (closeClick)="onCrossClick()"></employees-modal-window>
 </div>
 
     

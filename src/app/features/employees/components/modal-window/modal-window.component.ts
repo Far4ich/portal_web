@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './modal-window.component.html',
 })
 export class ModalWindowComponent {
-  @Input() asd:ModalWindowParams = {
+  @Input() params: ModalWindowParams = {
     title: "Select",
     confirmButtonText: 'Выбрать',
     declineButtonText: 'Отмена'

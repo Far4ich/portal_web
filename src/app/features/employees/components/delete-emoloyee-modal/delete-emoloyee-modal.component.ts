@@ -11,9 +11,7 @@ import { ToastState } from 'src/app/core/components/toast-alert/toast-alert.comp
 
 export class DeleteEmployeeModal {
 
-  @Input() employees: EmployeeItemEntity[] = [
-    {id: 100, img: "", name: "Кирилл Сергеевич", mail: "", isSelect: false}
-  ]
+  @Input() employees: EmployeeItemEntity[] = []
 
   public contentString: string = ""
 

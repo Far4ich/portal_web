@@ -9,6 +9,8 @@ import { EmployeeSelectAction, EmployeeSelectActionTypes } from './state/employe
 import { EmployeeSelectReducer } from './state/employee-select-reducer';
 import { EmployeeSelectSettings, CountType, ClickType } from './interfaces/employee-select-settings';
 import { DepartmentEntity } from '../department/department.component';
+import { EmployeeService } from 'src/app/features/employees/data/employee-service';
+import { DepartmentService } from '../../data/department-service';
 
 @Component({
   selector: 'employees-select',
@@ -39,26 +41,20 @@ export class EmployeeSelectComponent extends Store<EmployeeSelectState, Employee
     state: EmployeeSelectState,
     executor: EmployeeSelectExecutor,
     reducer: EmployeeSelectReducer,
-    private data: EmployeesDataService
+    private dataService: EmployeesDataService,
+    private employeesService: EmployeeService,
+    private departmentService: DepartmentService
   ) {
     super(state, executor, reducer);
-    this.performAction({
-      type: EmployeeSelectActionTypes.INIT_DATA,
-      settings: this.settings,
-      employees: data.ConvertToEmployeeItemEntityList(data.employees),
-      departments: data.ConvertToDepartmentEntityList(data.departments),
-      alreadySelectedEmployeeIds: this.alreadySelectedEmployeeIds
-    })
-  }
-  
-  ngOnChanges()
-  {
-    this.performAction({
-      type: EmployeeSelectActionTypes.INIT_DATA,
-      settings: this.settings,
-      employees: this.data.ConvertToEmployeeItemEntityList(this.data.employees),
-      departments: this.data.ConvertToDepartmentEntityList(this.data.departments),
-      alreadySelectedEmployeeIds: this.alreadySelectedEmployeeIds
+    employeesService.getEmployees().subscribe((empls)=>{
+      this.performAction({
+        type: EmployeeSelectActionTypes.INIT_DATA,
+        settings: this.settings,
+        employees: dataService.ConvertToEmployeeItemEntityList(empls.employees),
+        departments: dataService.ConvertToDepartmentEntityList(empls.departments),
+        alreadySelectedEmployeeIds: this.alreadySelectedEmployeeIds,
+        isEditable: empls.isEditable
+      })
     })
   }
 
@@ -68,6 +64,15 @@ export class EmployeeSelectComponent extends Store<EmployeeSelectState, Employee
       employee: employee
     })
     this.selectClicked.emit(this.getSelected())
+  }
+
+  departmentDelete(department:DepartmentEntity): void{
+    console.log(department)
+    this.departmentService.deleteDepartment(department.id).subscribe((res)=>{
+      this.performAction({
+        type: EmployeeSelectActionTypes.UPDATE_DATA
+      })
+    })
   }
 
   departmentClicked(department: DepartmentEntity): void

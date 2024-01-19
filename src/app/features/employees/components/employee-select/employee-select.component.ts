@@ -24,7 +24,8 @@ export class EmployeeSelectComponent extends Store<EmployeeSelectState, Employee
     blueBoxVisible: true,
     countType: CountType.Multiple,
     clickType: ClickType.CtrlClicked,
-    overflowScroll: false
+    overflowScroll: false,
+    tripleDotVisible: true
   }
 
   @Input() public alreadySelectedEmployeeIds: number[] = []

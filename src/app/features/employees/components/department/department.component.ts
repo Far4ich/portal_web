@@ -26,14 +26,15 @@ export class DepartmentComponent implements OnInit {
       mail: '',
       img: '',
     },
+    countOfEmployees: 0,
     departments: [],
     employees: [],
   };
 
   @Input() public offset: number = 0;
   oneOffsetStepSize = 36;
-  countOfEmploees: number = 0;
   @Input() employeesVisible: boolean = true;
+  @Input() tripleDotVisible: boolean = true;
 
   @Output() arrowClicked = new EventEmitter<DepartmentEntity>();
   @Output() ctrlClicked = new EventEmitter<DepartmentEntity>();
@@ -44,7 +45,10 @@ export class DepartmentComponent implements OnInit {
   constructor(private navigator: EmployeesNavigator) {}
 
   ngOnInit(): void {
-    this.countOfEmploees = this.getCountEmployees(this.department);
+    if(this.department.countOfEmployees == 0)
+    {
+      this.department.countOfEmployees = this.getCountEmployees(this.department)
+    }
   }
 
   editDepartment(){
@@ -53,11 +57,6 @@ export class DepartmentComponent implements OnInit {
        params: this.department.id.toString(),
        ids: []
     })
-  }
-  
-  deleteDepartment()
-  {
-    this.deleteClicked.emit(this.department)
   }
 
   changeVisibilityContent(): void {
@@ -100,9 +99,9 @@ export class DepartmentComponent implements OnInit {
     this.isMenuActive = value;
   }
 
-  public getCountEmployees(folder: DepartmentEntity): number {
-    let counter = folder.employees.length;
-    folder.departments.forEach((element) => {
+  public getCountEmployees(departmentEntity: DepartmentEntity): number {
+    let counter = departmentEntity.countOfEmployees != 0 ? departmentEntity.countOfEmployees: departmentEntity.employees.length;
+    departmentEntity.departments.forEach((element) => {
       counter += this.getCountEmployees(element);
     });
     return counter;
@@ -124,5 +123,6 @@ export interface DepartmentEntity {
   visibleContent: boolean,
   supervisor: EmployeeDto | null,
   departments: DepartmentEntity[],
-  employees: EmployeeItemEntity[]
-} 
+  employees: EmployeeItemEntity[],
+  countOfEmployees: number
+}

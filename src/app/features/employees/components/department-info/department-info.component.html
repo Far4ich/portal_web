@@ -1,22 +1,27 @@
 <app-core-main-content-card>
-  <div class="flex justify-between">
-    <div class="flex">
-      <app-core-button-back class="my-auto" />
-      <p class="ml-4 my-auto font-medium text-[28px]">{{ department.name }}</p>
-    </div>
-    <app-core-button-light-gray
-      class="my-auto"
-      (buttonClick)="editDepartment()"
-      [text]="strings.change"
-    />
+  <div class="flex items-center flex-col" *ngIf="isLoading">
+    <svg-loading  class="animate-spin text-tt-primary w-24 h-24" />
   </div>
-  <div class="mt-6 flex font-normal text-[16px]">
-    <p class="text-tt-light-gray">{{ strings.supervisor }}:</p>
-    <p class="ml-1 text-tt-black" *ngIf="department.supervisor">{{ department.supervisor.name }}</p>
+  <div *ngIf="!isLoading">
+    <div class="flex justify-between">
+      <div class="flex">
+        <app-core-button-back class="my-auto" />
+        <p class="ml-4 my-auto font-medium text-[28px]">{{ department.name }}</p>
+      </div>
+      <app-core-button-light-gray
+        class="my-auto"
+        (buttonClick)="editDepartment()"
+        [text]="strings.change"
+      />
+    </div>
+    <div class="mt-6 flex font-normal text-[16px]">
+      <p class="text-tt-light-gray">{{ strings.supervisor }}:</p>
+      <p class="ml-1 text-tt-black" *ngIf="department.supervisor">{{ department.supervisor.name }}</p>
+    </div>
   </div>
 </app-core-main-content-card>
 
-<div class="mt-7">
+<div class="mt-7" *ngIf="!isLoading">
   <app-core-main-content-card>
     <div class="flex font-medium text-[20px]">
       <p class="text-tt-black">{{ strings.participants }}</p>
@@ -30,7 +35,7 @@
 
     <div class="mt-6">
       <div *ngIf="!isEmptyDepartment()" class="flex-column gap-3">
-        <app-core-add-employees />
+        <app-core-add-employees (buttonClick)="addEmplModalVisible=true" />
         <app-core-department
           *ngFor="let item of department.departments"
           [department]="item"
@@ -42,14 +47,20 @@
       </div>
 
       <div *ngIf="isEmptyDepartment()">
-        <img src="../../../../../assets/empty-department.svg" />
+        <img src="../../../../../assets/empty-department.svg" alt=""/>
         <p class="mt-1 text-center font-extrabold text-tt-black text-[16px]">
           {{ strings.emptyText }}
         </p>
         <div class="mt-4 text-center">
-          <app-core-button-red>{{ strings.add }}</app-core-button-red>
+          <app-core-button-red (onClick)="addEmplModalVisible = true">{{ strings.add }}</app-core-button-red>
         </div>
       </div>
+
     </div>
   </app-core-main-content-card>
 </div>
+
+<select-employees-modal-window *ngIf="addEmplModalVisible"
+  (closeClicked)="addEmplModalVisible = false"
+  (submitClicked)="addEmployees($event)"
+/>

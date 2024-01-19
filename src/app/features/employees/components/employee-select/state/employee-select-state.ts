@@ -13,7 +13,8 @@ export class EmployeeSelectState {
     blueBoxVisible: true,
     countType: CountType.Multiple,
     clickType: ClickType.CtrlClicked,
-    overflowScroll: false
+    overflowScroll: false,
+    tripleDotVisible: true
   }
   readonly isEditable: boolean = false
   readonly searchField: string = ''

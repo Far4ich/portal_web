@@ -21,7 +21,7 @@ export class SelectEmployeesModalComponent {
   constructor(private toastService: ToastsService){}
 
   public selectedEmployees: EmployeeItemEntity[] = []
-  
+
   strings = {
     title: "Выберите сотрудников",
     change: "Выбрать",
@@ -40,7 +40,8 @@ export class SelectEmployeesModalComponent {
     blueBoxVisible: true,
     countType: CountType.Multiple,
     clickType: ClickType.Clicked,
-    overflowScroll: true
+    overflowScroll: true,
+    tripleDotVisible: false
   }
 
   public modalWindowData: ModalWindowData = {

@@ -22,6 +22,7 @@ export class EmployeeItemComponent {
   };
   @Input() public highlightedPart: string = '';
   @Input() public offset: number = 0;
+  @Input() public tripleDotVisible: boolean = true;
 
   @Output() clicked = new EventEmitter<EmployeeItemEntity>();
   @Output() ctrlClicked = new EventEmitter<EmployeeItemEntity>();

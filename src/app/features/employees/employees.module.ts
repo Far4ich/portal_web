@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ComponentsModule } from 'src/app/core/components/components.module';
 import {
+  SvgLoading,
   SvgTripleDot,
-  SvgXMark,
-} from 'src/app/core/components/svg-components/svg.components';
+  SvgXMark
+} from "src/app/core/components/svg-components/svg.components";
 import {
   DateRule,
   EmptyRule,
@@ -72,6 +73,7 @@ import { DepartmentService } from './data/department-service';
     RouterOutlet,
     SvgXMark,
     SvgTripleDot,
+    SvgLoading
   ],
   providers: [
     {
@@ -114,7 +116,7 @@ import { DepartmentService } from './data/department-service';
       useExisting: Validator,
       useFactory: EmployeesModule.jobTitleValidatorFactory,
     },
-    EmployeeService, 
+    EmployeeService,
     DepartmentService
   ],
 })

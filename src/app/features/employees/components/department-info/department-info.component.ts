@@ -7,6 +7,8 @@ import {
   EmployeesNavigator,
 } from '../../navigation/employees-navigator';
 import { DepartmentService } from '../../data/department-service';
+import { EmployeeService } from "../../data/employee-service";
+import { EmployeeItemEntity } from "../employee-item/employee-item.component";
 
 @Component({
   selector: 'department-info',
@@ -14,11 +16,15 @@ import { DepartmentService } from '../../data/department-service';
 })
 export class DepartmentInfoComponent {
   public countOfEmployees: number = 0;
+  public addEmplModalVisible: boolean = false
+  private parentDepId: number = -1
+  public isLoading: boolean = true
   public department: DepartmentEntity = {
-    id: 0, 
+    id: 0,
     name: '',
     isSelect: false,
     visibleContent: false,
+    countOfEmployees: 0,
     supervisor: {
       id: 0,
       img: '',
@@ -29,19 +35,29 @@ export class DepartmentInfoComponent {
     employees: []
   }
 
-  constructor(private dataService: EmployeesDataService,
+  constructor(
+    private dataService: EmployeesDataService,
     private navigator: EmployeesNavigator,
     private departmentService: DepartmentService,
     private route: ActivatedRoute,
-    private router: Router) 
+    private router: Router
+  )
     {
-        let id = this.route.snapshot.paramMap.get('id')
-
-        departmentService.getDepartment(Number(id)).subscribe((dep)=>{
-          this.department = dataService.ConvertDepartmentFullToDepartmentEntity(dep.department)
-          this.getCountEmployees(this.department)
-          })
+      this.update()
     }
+
+  update()
+  {
+    this.isLoading = true
+    let id = this.route.snapshot.paramMap.get('id')
+    this.departmentService.getDepartment(Number(id)).subscribe((dep)=>{
+      this.department = this.dataService.ConvertDepartmentFullToDepartmentEntity(dep.department)
+      this.countOfEmployees = 0
+      this.getCountEmployees(this.department)
+      this.parentDepId = dep.department.parentDepartment ? dep.department.parentDepartment.id: -1
+      this.isLoading = false
+    })
+  }
 
   getCountEmployees(department: DepartmentEntity):void
   {
@@ -57,6 +73,28 @@ export class DepartmentInfoComponent {
       params: '' + this.department.id,
       ids: []
     });
+  }
+
+  addEmployees(employees: EmployeeItemEntity[])
+  {
+    let ids: number[] = []
+    employees.forEach((element) => {
+      if (element.isSelect) {
+        ids.push(element.id)
+      }
+    })
+
+    this.departmentService.editDepartment(this.department.id,
+      {
+        name: this.department.name,
+        supervisorID: this.department.supervisor ? this.department.supervisor.id: null,
+        parentDepartmentID: this.parentDepId != -1? this.parentDepId: null,
+        employeeIDs: ids
+      }).subscribe(()=>{
+        this.addEmplModalVisible = false
+        this.update()
+      }
+    )
   }
 
   strings = {

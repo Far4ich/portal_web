@@ -104,7 +104,7 @@ export class EmployeesDataService {
       icon: '',
     },
   ];
-  
+
   public ConvertToDepartmentEntityList(
     departments: DepartmentWithEmployeesDto[]
   ): DepartmentEntity[] {
@@ -118,6 +118,7 @@ export class EmployeesDataService {
           isSelect: false,
           visibleContent: false,
           supervisor: null,
+          countOfEmployees: 0,
           departments: this.ConvertToDepartmentEntityList(element.departments),
           employees: this.ConvertToEmployeeItemEntityList(element.employees),
         });
@@ -129,22 +130,23 @@ export class EmployeesDataService {
   public ConvertItemsToDepartmentEntityList(
     departments: DepartmentItemDto[]
   ): DepartmentEntity[] {
-    let departmentsEntitys: DepartmentEntity[] = [];
+    let departmentEntities: DepartmentEntity[] = [];
     if (departments != null)
     {
       departments.forEach((element) => {
-        departmentsEntitys.push({
+        departmentEntities.push({
           id: element.id,
           name: element.name,
           isSelect: false,
           visibleContent: false,
           supervisor: null,
+          countOfEmployees: element.countOfEmployees,
           departments: this.ConvertItemsToDepartmentEntityList(element.departments),
           employees: [],
         });
       });
     }
-    return departmentsEntitys;
+    return departmentEntities;
   }
 
   public ConvertToDepartmentEntity(
@@ -156,6 +158,7 @@ export class EmployeesDataService {
       isSelect: false,
       visibleContent: false,
       supervisor: null,
+      countOfEmployees: 0,
       departments: this.ConvertToDepartmentEntityList(department.departments),
       employees: this.ConvertToEmployeeItemEntityList(department.employees),
     };
@@ -175,6 +178,7 @@ export class EmployeesDataService {
         name: department.supervisor.name,
         mail: ''
       },
+      countOfEmployees: 0,
       departments: this.ConvertToDepartmentEntityList(department.departments),
       employees: this.ConvertToEmployeeItemEntityList(department.employees),
     };

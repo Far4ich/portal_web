@@ -3,7 +3,7 @@
   str: $event
 })"/>
 
-<div [ngClass]="{ 
+<div [ngClass]="{
   'h-[350px] overflow-scroll overflow-x-hidden no-scrollbar': state.settings.overflowScroll
   }">
 
@@ -38,19 +38,21 @@
 
   <div class="mt-6">
     <div *ngIf="state.searchField.length == 0">
-      <app-core-department *ngFor="let item of state.departments" 
+      <app-core-department *ngFor="let item of state.departments"
         [department]="item"
         (employeeCtrlClicked)="employeeCtrlClicked($event)"
         (employeeClicked)="employeeClicked($event)"
         (clicked)="departmentClicked($event)"
         (deleteClicked)="departmentDelete($event)"
         (ctrlClicked)="departmentCtrlClicked($event)"
+        [tripleDotVisible]="settings.tripleDotVisible"
       />
 
-      <app-core-employee-item *ngFor="let item of state.employees" 
-        [employee]="item"  
+      <app-core-employee-item *ngFor="let item of state.employees"
+        [employee]="item"
         (clicked)="employeeClicked($event)"
         (ctrlClicked)="employeeCtrlClicked($event)"
+        [tripleDotVisible]="settings.tripleDotVisible"
       />
     </div>
 

@@ -1,6 +1,6 @@
 export interface DepartmentItemDto{
     id: number
     name: string
-    countofEmployees: number
+    countOfEmployees: number
     departments: DepartmentItemDto[]
 }

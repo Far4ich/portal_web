@@ -37,7 +37,8 @@ export class EmployeesListComponent {
     blueBoxVisible: true,
     countType: CountType.Multiple,
     clickType: ClickType.CtrlClicked,
-    overflowScroll: false
+    overflowScroll: false,
+    tripleDotVisible: true
   };
 
   strings = {

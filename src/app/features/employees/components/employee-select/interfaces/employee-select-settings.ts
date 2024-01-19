@@ -3,8 +3,9 @@ export interface EmployeeSelectSettings {
     blueBoxVisible: boolean,
     countType: CountType,
     clickType: ClickType,
-    overflowScroll: boolean
+    overflowScroll: boolean,
+    tripleDotVisible: boolean
   }
-  
+
   export enum CountType { Single, Multiple }
   export enum ClickType { Clicked, CtrlClicked }

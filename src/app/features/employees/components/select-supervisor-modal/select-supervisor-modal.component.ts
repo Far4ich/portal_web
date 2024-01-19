@@ -16,7 +16,7 @@ export class SelectSupervisorModalComponent {
   constructor(private toastService: ToastsService){}
 
   public selectedEmployee: EmployeeItemEntity | null = null
-  
+
   strings = {
     title: "Выберите руководителя",
     change: "Выбрать",
@@ -28,7 +28,8 @@ export class SelectSupervisorModalComponent {
     blueBoxVisible: true,
     countType: CountType.Single,
     clickType: ClickType.Clicked,
-    overflowScroll: true
+    overflowScroll: true,
+    tripleDotVisible: false
   }
 
   public modalWindowData: ModalWindowData = {

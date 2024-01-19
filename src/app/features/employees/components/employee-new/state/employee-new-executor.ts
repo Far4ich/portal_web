@@ -180,7 +180,7 @@ export class EmployeeNewExecutor extends Executor<
       });
       return;
     }
-    
+
     let state = this.getState()
 
     this.employeeService.createEmployee({
@@ -190,7 +190,7 @@ export class EmployeeNewExecutor extends Executor<
       roles: state.selectedRoles.map((role): number => {
         return Number(role.id)
       }),
-      dateOfBirth: '1212-12-12',
+      dateOfBirth: state.dateOfBirth,
       telephoneNumber: state.phoneNumber,
       email: state.email,
       icon: '',
